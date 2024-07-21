@@ -1,0 +1,16 @@
+#include <vector>
+#include <algorithm>
+
+class Solution {
+public:
+    std::vector<int> solve(std::vector<int>& x) {
+        int mn = x[0];
+        x[0] = 0;
+        for (size_t i = 1; i < x.size(); ++i) {
+            int temp = x[i];
+            x[i] = mn;
+            mn = std::min(temp, mn);
+        }
+        return x;
+    }
+};
