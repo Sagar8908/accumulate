@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int solve(std::vector<int>& nums) {
+        // Transform nums
+        for (int& num : nums) {
+            num = 2 * num - 1;
+        }
+
+        // Calculate prefix sums
+        std::vector<int> acc(nums.size() + 1, 0);
+        std::partial_sum(nums.begin(), nums.end(), acc.begin() + 1);
+
+        // Store the indices of each prefix sum
+        std::unordered_map<int, std::vector<int>> d;
+        for (int i = 0; i < acc.size(); ++i) {
+            d[acc[i]].push_back(i);
+        }
+
+        // Find the maximum length subarray with the same prefix sum difference
+        int max_len = 0;
+        for (const auto& [key, indices] : d) {
+            if (indices.size() > 1) {
+                max_len = std::max(max_len, indices.back() - indices.front());
+            }
+        }
+
+        // Return the result
+        return nums.size() - max_len;
+    }
+};
